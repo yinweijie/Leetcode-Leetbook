@@ -5,8 +5,6 @@
 
 using namespace std;
 
-using namespace std;
-
 class MyCircularQueue {
 private:
     vector<int> data;
