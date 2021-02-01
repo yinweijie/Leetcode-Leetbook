@@ -1,7 +1,7 @@
-/// https://leetcode-cn.com/leetbook/read/queue-stack/kzlb5/
+// 设计循环队列
+// https://leetcode-cn.com/leetbook/read/queue-stack/kzlb5/
 
 #include <vector>
-#include <iostream>
 
 using namespace std;
 
@@ -44,7 +44,6 @@ public:
         }
 
         front = (front + 1) % data.size();
-
         return true;
     }
     
