@@ -45,6 +45,7 @@ public:
         int step = 0;
         while(!q.empty()) {
             int sz = q.size();
+            // 这一层循环是必须的，每一个step都对应最多8种可能性，遍历这些可能性才算完成一个step
             for(int n = 0; n < sz; n++) {
                 string curCode = q.front();
                 q.pop();
