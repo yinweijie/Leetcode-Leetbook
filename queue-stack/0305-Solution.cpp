@@ -77,9 +77,3 @@ public:
         return -1;
     }
 };
-
-int main() {
-    vector<string> deadends = {"999"};
-    Solution().openLock(deadends, "8888");
-    return 0;
-}
