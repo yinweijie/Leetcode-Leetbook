@@ -16,7 +16,6 @@ public:
         int n = matrix[0].size();
         bool direction = true;
 
-
         int digaSum = (m - 1) + (n - 1);
         for(int d = 0; d <= digaSum; d++) {
             if(direction) { // i = d, j = 0
