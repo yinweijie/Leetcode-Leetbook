@@ -12,6 +12,7 @@ struct ListNode {
     ListNode(int x, ListNode *next) : val(x), next(next) {}
 };
 
+// 参考：https://leetcode-cn.com/problems/palindrome-linked-list/solution/234-hui-wen-lian-biao-shu-zu-mo-ni-fan-z-70k9/
 class Solution {
 public:
     bool isPalindrome(ListNode* head) {
