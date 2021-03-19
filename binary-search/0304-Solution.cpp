@@ -15,14 +15,18 @@ public:
 
             if(nums[mid] == target) return mid;
 
-            if(nums[0] < nums[mid]) {
-                if(nums[l] <= target && target < nums[mid]) {
+            // <= 这里的=不能少了，因为当只有两个元素的时候，mid为0。如果mid为target
+            // 所在位置，则上面的if会提前捕捉到，如果mid + 1为target所在位置，则
+            // nums[0] <= nums[mid]保证了这种情况进入第一个if分支，并被l = mid + 1;
+            // 这个分支捕获到
+            if(nums[0] <= nums[mid]) {
+                if(nums[0] <= target && target < nums[mid]) {
                     r = mid - 1;
                 } else {
                     l = mid + 1;
                 }
             } else {
-                if(nums[mid] < target && target <= nums[r]) {
+                if(nums[mid] < target && target <= nums[nums.size() - 1]) {
                     l = mid + 1;
                 } else {
                     r = mid - 1;
