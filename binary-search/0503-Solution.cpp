@@ -2,86 +2,40 @@
 // https://leetcode-cn.com/leetbook/read/binary-search/xeve4m/
 
 #include <vector>
+#include <iostream>
 
 using namespace std;
 
+// 参考：https://leetcode-cn.com/problems/find-k-closest-elements/solution/pai-chu-fa-shuang-zhi-zhen-er-fen-fa-python-dai-ma/
 class Solution {
-private:
-    // >= x的最小索引
-    int findPivotLarger(vector<int>& nums, int x) {
-        int l = 0, r = nums.size();
+public:
+    vector<int> findClosestElements(vector<int>& arr, int k, int x) {
+        int l = 0, r = arr.size() - k;
 
         while(l < r) {
             int mid = l + (r - l) / 2;
 
-            if(nums[mid] < x) {
-                l = mid + 1;
-            } else {
+            // 注意这里不能写成abs(x - arr[mid]) <= abs(arr[mid + k] - x)
+            // 必须分类讨论然后合并重合的可能性
+            // 例如：[2, 2, 2, 3] ==> [mid, ..., mid + k, x]
+            // 满足abs(x - arr[mid]) <= abs(arr[mid + k] - x)
+            // 但并不满足x - arr[mid] <= arr[mid + k] - x
+            if(x - arr[mid] <= arr[mid + k] - x) {
                 r = mid;
-            }
-        }
-
-        return l;
-    }
-
-    // <= x的最大索引
-    int findPivotSmaller(vector<int>& nums, int x) {
-        int l = -1, r = nums.size() - 1;
-
-        while(l < r) {
-            int mid = l + (r - l + 1) / 2;
-
-            if(nums[mid] > x) {
-                r = mid - 1;
             } else {
-                l = mid;
+                l = mid + 1;
             }
         }
 
-        return l;
-    }
-
-public:
-    vector<int> findClosestElements(vector<int>& arr, int k, int x) {
-        int pivotIndexLarger = findPivotLarger(arr, x);
-        int pivotIndexSmaller = findPivotSmaller(arr, x);
-        int pivotIndex = (pivotIndexLarger - x) > (x - pivotIndexSmaller) ? 
-                pivotIndexSmaller : pivotIndexLarger;
-
-        if(pivotIndex == 0) {
-            return vector<int>(arr.begin(), arr.begin() + k);
-        }
-
-        if(pivotIndex == arr.size()) {
-            return vector<int>(arr.end() - k, arr.end());
-        }
-
-        int leftCount = 0, rightCount = 0;
-        if((k - 1) % 2 == 0) {
-            leftCount = rightCount = (k - 1) / 2;
-        } else {
-            leftCount = (k - 1) / 2 + 1;
-            rightCount = (k - 1) / 2;
-        }
-
-        int leftIndex = pivotIndex - leftCount;
-        int rightIndex = pivotIndex + rightCount;
-
-        if(leftIndex < 0) {
-            rightIndex += (-leftIndex);
-            leftIndex = 0;
-        }
-        if(rightIndex >= arr.size()) {
-            leftIndex -= (rightIndex - (arr.size() - 1));
-            rightIndex = arr.size() - 1;
-        }
-
-        return vector<int>(arr.begin() + leftIndex, arr.begin() + rightIndex + 1);
+        return vector<int>(arr.begin() + l, arr.begin() + l + k);
     }
 };
 
 int main() {
-    vector<int> arr {0,1,1,1,2,3,6,7,8,9};
-    Solution().findClosestElements(arr, 9, 4);
+    vector<int> arr {1,1,2,2,2,2,2,3,3};
+    vector<int> res = Solution().findClosestElements(arr, 3, 3);
+    for(auto num : res) {
+        cout << num << endl;
+    }
     return 0;
 }
