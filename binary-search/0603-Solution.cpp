@@ -14,12 +14,8 @@ class Solution {
 public:
     int search(const ArrayReader& reader, int target) {
         int l = 0, r = 1;
-        while(reader.get(r) < target || reader.get(r) == 2147483647) {
+        while(reader.get(r) < target || reader.get(r) != 2147483647) {
             r *= 2;
-        }
-
-        if(reader.get(r) == 2147483647) {
-            return -1;
         }
 
         while(l <= r) {
@@ -37,8 +33,3 @@ public:
         return -1;
     }
 };
-
-int main() {
-    Solution();
-    return 0;
-}
