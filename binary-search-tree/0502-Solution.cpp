@@ -29,6 +29,8 @@ private:
             return hashMap[node];
         }
 
+        // 对于数据规模比较小的测试用例，哈希表体现不出优势，所以这里虽然优化了，但是
+        // leetcode上的测试效率反而比不优化低。主要是哈希表的查表与扩容耗时较大。
         int retHeight = max(height(node->left), height(node->right)) + 1;
         hashMap[node] = retHeight;
         return retHeight;
