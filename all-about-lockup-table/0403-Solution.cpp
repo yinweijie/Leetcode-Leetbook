@@ -2,27 +2,47 @@
 // https://leetcode-cn.com/leetbook/read/all-about-lockup-table/xhhlwv/
 
 #include <vector>
-#include <unordered_map>
+#include <algorithm>
 
 using namespace std;
 
 class Solution {
 public:
     vector<vector<int>> threeSum(vector<int>& nums) {
-        unordered_map<int, pair<int, int>> hashMap;
-        for(int i = 0; i < nums.size(); i++) {
-            for(int j = i + 1; j < nums.size(); j++) {
-                hashMap[nums[i] + nums[j]] = make_pair(i, j);
-            }
-        }
+        if(nums.size() < 3) return vector<vector<int>>();
 
+        sort(nums.begin(), nums.end());
+
+        if(nums[0] > 0) return vector<vector<int>>();
         vector<vector<int>> res;
-        for(int i = 0; i < nums.size(); i++) {
-            if(hashMap.find(-nums[i]) != hashMap.end()) {
-                auto[indexI, indexJ] = hashMap[-nums[i]];
+        for(int k = 0; k <= nums.size() - 3; k++) {
+            if(k > 0 && nums[k] == nums[k - 1]) {
+                continue;
+            }
 
-                if(i > indexI && i > indexJ) {
-                    res.emplace_back(vector<int> {nums[indexI], nums[indexJ], nums[i]});
+            int i = k + 1, j = nums.size() - 1;
+
+            while(i < j) {
+                int numSum = nums[k] + nums[i] + nums[j];
+                if(numSum == 0) {
+                    res.emplace_back(vector<int> {nums[k], nums[i], nums[j]});
+
+                    i++;
+                    while(nums[i] == nums[i - 1] && i < j) {
+                        i++;
+                    }
+                    if(i == j) {
+                        break;
+                    }
+
+                    j--;
+                    while(nums[j] == nums[j + 1] && i < j) {
+                        j--;
+                    }
+                } else if(numSum > 0) {
+                    j--;
+                } else {
+                    i++;
                 }
             }
         }
@@ -32,7 +52,7 @@ public:
 };
 
 int main() {
-    vector<int> nums = {-1,0,1,2,-1,-4};
+    vector<int> nums {0,0,0,0};
 
     Solution().threeSum(nums);
 
