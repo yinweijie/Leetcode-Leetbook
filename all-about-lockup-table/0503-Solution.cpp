@@ -20,7 +20,7 @@ public:
 
         vector<vector<string>> res;
         for(auto&[strSorted, vecStrs] : hashMap) {
-            res.emplace_back(vecStrs);
+            res.emplace_back(std::move(vecStrs));
         }
 
         return res;
