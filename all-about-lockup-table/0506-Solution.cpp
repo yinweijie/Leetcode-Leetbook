@@ -33,23 +33,33 @@ private:
 
 public:
     int maxPoints(vector<vector<int>>& points) {
+        if(points.size() == 0) return 0;
+        if(points.size() == 1) return 1;
+
         // slot = dy / dx ==> pair(dy, dx)
         unordered_map<pair<int, int>, int, HashPair> slopCount;
+        int res = 0;
 
         for(int i = 0; i < points.size() - 1; i++) {
             for(int j = i + 1; j < points.size(); j++) {
                 int distX = points[j][0] - points[i][0];
                 int distY = points[j][1] - points[i][1];
-                int gcdRet = gcd(points[j][0] - points[i][0], points[j][1] - points[i][1]);
+                int gcdRet = gcd(distY, distX);
 
                 slopCount[make_pair(distY / gcdRet, distX / gcdRet)]++;
                 // cout << "dy: " << distY / gcdRet << ", dx: " << distX / gcdRet <<endl;
             }
+            // for(auto it = slopCount.begin(); it != slopCount.end(); it++) {
+            //     cout << "dy: " << it->first.first << " dx: " << it->first.second << " count: " << it->second << endl;
+            // }
+            for(auto it = slopCount.begin(); it != slopCount.end(); it++) {
+                res = max(res, it->second + 1);
+            }
+
+            slopCount.clear();
         }
-        // cout << "slogCount: " << slopCount[make_pair(1, 1)] << endl;
-        for(auto it = slopCount.begin(); it != slopCount.end(); it++) {
-            cout << "dy: " << it->first.first << " dx: " << it->first.second << " count: " << it->second << endl;
-        }
+
+        return res;
     }
 };
 
