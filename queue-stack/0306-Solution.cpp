@@ -2,7 +2,7 @@
 // https://leetcode-cn.com/leetbook/read/queue-stack/kfgtt/
 
 #include <queue>
-#include <vector
+#include <vector>
 
 using namespace std;
 
