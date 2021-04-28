@@ -60,13 +60,13 @@ private:
 
         void siftDown(int k) {
             int n = data.size();
-            while(k <= n - 1) {
+            while(leftChild(k) <= n - 1) {
                 int j = leftChild(k);
                 if(j + 1 <= n - 1 && data[j + 1] > data[j]) {
                     j = j + 1;
                 }
 
-                if(j > n - 1) {
+                if(data[k] > data[j]) {
                     break;
                 }
 
