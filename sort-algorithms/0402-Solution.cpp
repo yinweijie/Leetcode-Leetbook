@@ -34,7 +34,7 @@ public:
         for(auto num : nums) {
             int index = cnt[num - minNum]; // num前面有cnt[num - minNum]个数
             res[index] = num; // 这个数正好是num对应的index值
-            cnt[num- minNum]++; // num已经插入了一次，cnt对应值要增加
+            cnt[num - minNum]++; // num已经插入了一次，cnt对应值要增加
         }
 
         return res;
