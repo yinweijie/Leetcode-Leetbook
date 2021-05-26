@@ -13,9 +13,26 @@ struct ListNode {
 };
 
 class Solution {
+private:
+    void deleteNext(ListNode* pre) {
+        ListNode* toDel = pre->next;
+        pre->next = toDel->next;
+        delete toDel;
+    }
+
 public:
     ListNode* deleteDuplicates(ListNode* head) {
         if(head == nullptr) return nullptr;
         ListNode* cur = head;
+
+        while(cur->next != nullptr) {
+            if(cur->val == cur->next->val) {
+                deleteNext(cur);
+            } else {
+                cur = cur->next;
+            }
+        }
+
+        return head;
     }
 };
