@@ -17,6 +17,12 @@ private:
         stk2.emplace(topE);
     }
 
+    void moveStk2ToStk1() {
+        int topE = stk2.top();
+        stk2.pop();
+        stk1.emplace(topE);
+    }
+
 public:
     SortedStack() {
 
@@ -26,18 +32,28 @@ public:
         while(!stk1.empty() && val > stk1.top()) {
             moveStk1ToStk2();
         }
+
+        stk1.emplace(val);
+
+        while(!stk2.empty()) {
+            moveStk2ToStk1();
+        }
     }
     
     void pop() {
+        if(isEmpty()) return;
 
+        stk1.pop();
     }
     
     int peek() {
+        if(isEmpty()) return -1;
 
+        return stk1.top();
     }
     
     bool isEmpty() {
-
+        return stk1.empty();
     }
 };
 
